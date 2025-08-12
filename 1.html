@@ -1,0 +1,183 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant Login & Sign Up</title>
+    <style>
+        /*
+         * CSS Styling
+         */
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: url('https://images.unsplash.com/photo-1517248135467-424a87a6d8d6?q=80&w=2940&auto=format&fit=crop') no-repeat center center/cover;
+            color: #fff;
+            position: relative; /* Added to ensure full page coverage */
+        }
+        
+        .container {
+            background: rgba(0, 0, 0, 0.7);
+            padding: 40px;
+            border-radius: 10px;
+            text-align: center;
+            width: 350px;
+            
+            /* The key centering properties are here */
+            margin: auto; 
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        #message {
+            color: #4CAF50;
+            margin-bottom: 15px;
+        }
+
+        form {
+            display: none;
+        }
+
+        form.active {
+            display: block;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            box-sizing: border-box;
+            background: #333;
+            color: #fff;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background: #FF5722;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        p {
+            font-size: 14px;
+        }
+
+        span {
+            color: #FF5722;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 id="title">Login</h1>
+        <p id="message"></p>
+        
+        <form id="loginForm" class="active">
+            <div class="input-group">
+                <input type="email" id="loginEmail" placeholder="Email" required>
+            </div>
+            <div class="input-group">
+                <input type="password" id="loginPassword" placeholder="Password" required>
+            </div>
+            <button type="submit">Login</button>
+            <p>Don't have an account? <span id="showSignUp">Sign up</span></p>
+        </form>
+
+        <form id="signUpForm">
+            <div class="input-group">
+                <input type="text" id="signUpName" placeholder="Full Name" required>
+            </div>
+            <div class="input-group">
+                <input type="email" id="signUpEmail" placeholder="Email" required>
+            </div>
+            <div class="input-group">
+                <input type="password" id="signUpPassword" placeholder="Password" required>
+            </div>
+            <button type="submit">Sign Up</button>
+            <p>Already have an account? <span id="showLogin">Login</span></p>
+        </form>
+    </div>
+
+    <script>
+        /*
+         * JavaScript Logic
+         */
+        document.addEventListener('DOMContentLoaded', () => {
+            const loginForm = document.getElementById('loginForm');
+            const signUpForm = document.getElementById('signUpForm');
+            const showSignUp = document.getElementById('showSignUp');
+            const showLogin = document.getElementById('showLogin');
+            const title = document.getElementById('title');
+            const message = document.getElementById('message');
+
+            function switchForm(formToShow, newTitle) {
+                loginForm.classList.remove('active');
+                signUpForm.classList.remove('active');
+                formToShow.classList.add('active');
+                title.textContent = newTitle;
+                message.textContent = '';
+            }
+
+            showSignUp.addEventListener('click', () => {
+                switchForm(signUpForm, 'Sign Up');
+            });
+
+            showLogin.addEventListener('click', () => {
+                switchForm(loginForm, 'Login');
+            });
+
+            loginForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const email = document.getElementById('loginEmail').value;
+                const password = document.getElementById('loginPassword').value;
+                
+                message.textContent = 'Login successful! Redirecting...';
+                message.style.color = '#4CAF50';
+                
+                setTimeout(() => {
+                    window.location.reload();
+                }, 2000);
+            });
+
+            signUpForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const name = document.getElementById('signUpName').value;
+                const email = document.getElementById('signUpEmail').value;
+                const password = document.getElementById('signUpPassword').value;
+                
+                message.textContent = 'Sign up successful! Please log in.';
+                message.style.color = '#4CAF50';
+                
+                setTimeout(() => {
+                    switchForm(loginForm, 'Login');
+                }, 2000);
+            });
+        });
+    </script>
+</body>
+</html>
+
+
